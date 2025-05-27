@@ -1,18 +1,19 @@
 package com.f1.api.controller;
 
 import com.f1.api.domain.piloto.DadosCadastroPiloto;
+import com.f1.api.domain.piloto.DadosListagemPiloto;
 import com.f1.api.domain.piloto.Piloto;
 import com.f1.api.domain.piloto.PilotoRepository;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("piloto")
+@RequestMapping("pilotos")
 public class PilotoController {
 
     @Autowired
@@ -25,4 +26,5 @@ public class PilotoController {
         System.out.println(dados);
         repository.inserirPiloto(piloto.getReferencia(), piloto.getNumero(), piloto.getCodigo(), piloto.getNome(), piloto.getSobrenome(), piloto.getDataNascimento(), piloto.getNacionalidade(), piloto.getUrl());
     }
+
 }

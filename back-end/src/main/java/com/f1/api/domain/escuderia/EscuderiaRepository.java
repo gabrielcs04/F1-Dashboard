@@ -10,8 +10,8 @@ public interface EscuderiaRepository extends JpaRepository<Escuderia, Long> {
     @Modifying
     @Transactional
     @Query(value = """
-                INSERT INTO grupo5.constructors (constructorref, name, nationality, url) 
-                VALUES (:referencia, :nome, :nacionalidade, :url)""",
+            INSERT INTO grupo5.constructors (constructorref, name, nationality, url) 
+            VALUES (:referencia, :nome, :nacionalidade, :url)""",
             nativeQuery = true)
     void inserirEscuderia(String referencia, String nome, String nacionalidade, String url);
 

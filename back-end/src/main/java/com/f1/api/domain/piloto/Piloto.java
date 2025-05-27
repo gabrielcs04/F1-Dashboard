@@ -2,7 +2,7 @@ package com.f1.api.domain.piloto;
 
 import jakarta.persistence.*;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.Objects;
 
 @Entity(name = "Piloto")
@@ -20,7 +20,7 @@ public class Piloto {
     @Column(name = "number")
     private Integer numero;
 
-    @Column(name = "code", nullable = false)
+    @Column(name = "code")
     private String codigo;
 
     @Column(name = "forename", nullable = false)
@@ -29,16 +29,27 @@ public class Piloto {
     @Column(name = "surname", nullable = false)
     private String sobrenome;
 
-    @Column(name = "dateofbirth", nullable = false)
-    private Date dataNascimento;
+    @Column(name = "dateofbirth")
+    private LocalDate dataNascimento;
 
-    @Column(name = "nationality", nullable = false)
+    @Column(name = "nationality")
     private String nacionalidade;
 
     @Column(name = "url")
     private String url;
 
     public Piloto() {
+    }
+
+    public Piloto(DadosCadastroPiloto dados) {
+        this.referencia = dados.referencia();
+        this.numero = dados.numero();
+        this.codigo = dados.codigo();
+        this.nome = dados.nome();
+        this.sobrenome = dados.sobrenome();
+        this.dataNascimento = dados.dataNascimento();
+        this.nacionalidade = dados.nacionalidade();
+        this.url = dados.url();
     }
 
     public Long getId() {
@@ -89,11 +100,11 @@ public class Piloto {
         this.sobrenome = sobrenome;
     }
 
-    public Date getDataNascimento() {
+    public LocalDate getDataNascimento() {
         return dataNascimento;
     }
 
-    public void setDataNascimento(Date dataNascimento) {
+    public void setDataNascimento(LocalDate dataNascimento) {
         this.dataNascimento = dataNascimento;
     }
 

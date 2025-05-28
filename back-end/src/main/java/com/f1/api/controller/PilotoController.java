@@ -16,8 +16,11 @@ import java.util.stream.Collectors;
 @RequestMapping("pilotos")
 public class PilotoController {
 
-    @Autowired
-    private PilotoRepository repository;
+    private final PilotoRepository repository;
+
+    public PilotoController(PilotoRepository repository) {
+        this.repository = repository;
+    }
 
     @PostMapping()
     @Transactional

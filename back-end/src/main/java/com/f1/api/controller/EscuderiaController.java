@@ -3,7 +3,9 @@ package com.f1.api.controller;
 import com.f1.api.domain.escuderia.DadosCadastroEscuderia;
 import com.f1.api.domain.escuderia.Escuderia;
 import com.f1.api.domain.escuderia.EscuderiaRepository;
+import com.f1.api.domain.piloto.DadosCadastroPiloto;
 import com.f1.api.domain.piloto.DadosListagemPiloto;
+import com.f1.api.domain.piloto.Piloto;
 import com.f1.api.domain.piloto.PilotoRepository;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,20 +16,21 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("escuderias")
+@RequestMapping("escuderia")
 public class EscuderiaController {
 
-    @Autowired
-    private EscuderiaRepository escuderiaRepository;
+    private final PilotoRepository pilotoRepository;
 
-    @Autowired
-    private PilotoRepository pilotoRepository;
+    public EscuderiaController(PilotoRepository pilotoRepository) {
+        this.pilotoRepository = pilotoRepository;
+    }
 
-    @PostMapping()
+    @PostMapping("/pilotos")
     @Transactional
-    public void cadastrar(@RequestBody @Valid DadosCadastroEscuderia dados) {
-        var escuderia = new Escuderia(dados);
-        escuderiaRepository.inserirEscuderia(escuderia.getReferencia(), escuderia.getNome(), escuderia.getNacionalidade(), escuderia.getUrl());
+    public void cadastrarPiloto(@RequestBody @Valid DadosCadastroPiloto dados) {
+        var piloto = new Piloto(dados);
+        System.out.println(dados);
+        pilotoRepository.inserirPiloto(piloto.getReferencia(), piloto.getNumero(), piloto.getCodigo(), piloto.getNome(), piloto.getSobrenome(), piloto.getDataNascimento(), piloto.getNacionalidade(), piloto.getUrl());
     }
 
 

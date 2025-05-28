@@ -27,4 +27,5 @@ public interface PilotoRepository extends JpaRepository<Piloto, Long> {
                 AND r.constructorid = :idEscuderia
             """, nativeQuery = true)
     List<Piloto> consultarPorSobrenomeEIdEscuderia(String sobrenome, Long idEscuderia);
+
 }

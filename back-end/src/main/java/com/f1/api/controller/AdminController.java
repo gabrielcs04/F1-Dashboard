@@ -1,13 +1,13 @@
 package com.f1.api.controller;
 
 import com.f1.api.domain.admin.*;
-import com.f1.api.domain.escuderia.DadosCadastroEscuderia;
 import com.f1.api.domain.escuderia.Escuderia;
 import com.f1.api.domain.escuderia.EscuderiaRepository;
-import com.f1.api.domain.piloto.DadosCadastroPiloto;
 import com.f1.api.domain.piloto.Piloto;
 import com.f1.api.domain.piloto.PilotoRepository;
-import com.f1.api.domain.temporada.TemporadaRepository;
+import com.f1.api.dto.admin.*;
+import com.f1.api.dto.escuderia.DadosCadastroEscuderia;
+import com.f1.api.dto.piloto.DadosCadastroPiloto;
 import jakarta.validation.Valid;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
@@ -28,7 +28,6 @@ public class AdminController {
         this.adminRepository = adminRepository;
     }
 
-
     @PostMapping("/escuderias")
     @Transactional
     public void cadastrarEscuderia(@RequestBody @Valid DadosCadastroEscuderia dados) {
@@ -44,23 +43,33 @@ public class AdminController {
     }
 
     @GetMapping("/dashboard/visao-geral")
-    public DadosRelatorioVisaoGeral visualizarRelatorioVisaoGeral() {
-        return adminRepository.obterRelatorioAdminVisaoGeral();
+    public DadosRelatorioVisaoGeral visualizarDashboardVisaoGeral() {
+        return adminRepository.obterVisaoGeral();
     }
 
     @GetMapping("/dashboard/corridas/{ano}")
-    public List<DadosRelatorioCorridasAno> visualizarRelatorioCorridasAno(@PathVariable Integer ano) {
-        return adminRepository.obterRelatorioAdminCorridasAno(ano);
+    public List<DadosListagemCorridas> visualizarDashboardCorridasAno(@PathVariable Integer ano) {
+        return adminRepository.obterCorridasAno(ano);
     }
 
     @GetMapping("/dashboard/escuderias/{ano}")
-    public List<DadosRelatorioEscuderiasAno> visualizarRelatorioEscuderiasAno(@PathVariable Integer ano) {
-        return adminRepository.obterRelatorioAdminEscuderiasAno(ano);
+    public List<DadosListagemPontuacaoItem> visualizarDashboardEscuderiasAno(@PathVariable Integer ano) {
+        return adminRepository.obterEscuderiasAno(ano);
     }
 
     @GetMapping("/dashboard/pilotos/{ano}")
-    public List<DadosRelatorioPilotosAno> visualizarRelatorioPilotosAno(@PathVariable Integer ano) {
-        return adminRepository.obterRelatorioAdminPilotosAno(ano);
+    public List<DadosListagemPontuacaoItem> visualizarDashboardPilotosAno(@PathVariable Integer ano) {
+        return adminRepository.obterPilotosAno(ano);
+    }
+
+    @GetMapping("/relatorio/status")
+    public List<DadosListagemQuantidadeItem> visualizarDashboardStatus() {
+        return adminRepository.obterRelatorioStatus();
+    }
+
+    @GetMapping("/relatorio/aeroportos/{cidade}")
+    public List<DadosListagemCidadeAeroporto> visualizarDashboardStatus(@PathVariable String cidade) {
+        return adminRepository.obterRelatorioCidadeAeroportos(cidade);
     }
 
 }

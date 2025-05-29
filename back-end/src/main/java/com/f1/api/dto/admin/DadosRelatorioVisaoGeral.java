@@ -1,4 +1,4 @@
-package com.f1.api.domain.admin;
+package com.f1.api.dto.admin;
 
 public record DadosRelatorioVisaoGeral(Long totalPilotos,
                                        Long totalEscuderias,

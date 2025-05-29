@@ -1,5 +1,6 @@
 package com.f1.api.domain.piloto;
 
+import com.f1.api.dto.piloto.DadosCadastroPiloto;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
@@ -12,7 +13,7 @@ public class Piloto {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "driverid")
-    private Long id;
+    private Integer id;
 
     @Column(name = "driverref", nullable = false)
     private String referencia;
@@ -52,11 +53,11 @@ public class Piloto {
         this.url = dados.url();
     }
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

@@ -1,4 +1,4 @@
-package com.f1.api.domain.piloto;
+package com.f1.api.dto.piloto;
 
 import jakarta.validation.constraints.NotBlank;
 

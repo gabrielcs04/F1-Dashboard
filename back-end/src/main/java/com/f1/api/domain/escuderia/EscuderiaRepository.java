@@ -1,11 +1,13 @@
 package com.f1.api.domain.escuderia;
 
+import com.f1.api.dto.DadosListagemQuantidade;
+import com.f1.api.dto.DadosListagemPeriodo;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.transaction.annotation.Transactional;
 
-public interface EscuderiaRepository extends JpaRepository<Escuderia, Long> {
+public interface EscuderiaRepository extends JpaRepository<Escuderia, Integer> {
 
     @Modifying
     @Transactional
@@ -14,5 +16,14 @@ public interface EscuderiaRepository extends JpaRepository<Escuderia, Long> {
             VALUES (:referencia, :nome, :nacionalidade, :url)""",
             nativeQuery = true)
     void inserirEscuderia(String referencia, String nome, String nacionalidade, String url);
+
+    @Query(value = "SELECT * FROM grupo5.obter_vitorias_escuderia(:idEscuderia)", nativeQuery = true)
+    DadosListagemQuantidade obterVitorias(Integer idEscuderia);
+
+    @Query(value = "SELECT * FROM grupo5.obter_qtd_pilotos_escuderia(:idEscuderia)", nativeQuery = true)
+    DadosListagemQuantidade obterQtdPilotos(Integer idEscuderia);
+
+    @Query(value = "SELECT * FROM grupo5.obter_periodo_escuderia(:idEscuderia)", nativeQuery = true)
+    DadosListagemPeriodo obterPeriodo(Integer idEscuderia);
 
 }

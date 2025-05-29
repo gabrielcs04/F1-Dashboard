@@ -1,4 +1,4 @@
-package com.f1.api.domain.escuderia;
+package com.f1.api.dto.escuderia;
 
 import jakarta.validation.constraints.NotBlank;
 

@@ -1,5 +1,7 @@
 package com.f1.api.domain.piloto;
 
+import com.f1.api.dto.DadosListagemPeriodo;
+import com.f1.api.dto.piloto.DadosRelatorioResultados;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -8,7 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDate;
 import java.util.List;
 
-public interface PilotoRepository extends JpaRepository<Piloto, Long> {
+public interface PilotoRepository extends JpaRepository<Piloto, Integer> {
 
     @Modifying
     @Transactional
@@ -26,6 +28,12 @@ public interface PilotoRepository extends JpaRepository<Piloto, Long> {
                 AND d.driverid = r.driverid 
                 AND r.constructorid = :idEscuderia
             """, nativeQuery = true)
-    List<Piloto> consultarPorSobrenomeEIdEscuderia(String sobrenome, Long idEscuderia);
+    List<Piloto> consultarPorSobrenomeEIdEscuderia(String sobrenome, Integer idEscuderia);
+
+    @Query(value = "SELECT * FROM grupo5.obter_periodo_piloto(:idPiloto)", nativeQuery = true)
+    DadosListagemPeriodo obterPeriodo(Integer idPiloto);
+
+    @Query(value = "SELECT * FROM grupo5.obter_resultado_ano_piloto(:idPiloto)", nativeQuery = true)
+    List<DadosRelatorioResultados> obterResultados(Integer idPiloto);
 
 }

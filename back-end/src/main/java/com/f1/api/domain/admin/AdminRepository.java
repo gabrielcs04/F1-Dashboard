@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 
-public interface AdminRepository extends JpaRepository<Admin, Long> {
+public interface AdminRepository extends JpaRepository<Admin, Integer> {
 
     @Query(value = "SELECT * FROM grupo5.obter_visao_geral()", nativeQuery = true)
     DadosRelatorioVisaoGeral obterVisaoGeral();

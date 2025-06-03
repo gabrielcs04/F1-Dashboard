@@ -6,6 +6,6 @@ import jakarta.persistence.*;
 public class Admin {
 
     @Id
-    private Long id = 1L;
+    private Integer id = 1;
 
 }

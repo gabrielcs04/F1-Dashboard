@@ -1,6 +1,8 @@
 package com.f1.api.domain.piloto;
 
 import com.f1.api.dto.DadosListagemPeriodo;
+import com.f1.api.dto.DadosListagemQuantidadeItem;
+import com.f1.api.dto.piloto.DadosListagemPontuacao;
 import com.f1.api.dto.piloto.DadosRelatorioResultados;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -35,5 +37,11 @@ public interface PilotoRepository extends JpaRepository<Piloto, Integer> {
 
     @Query(value = "SELECT * FROM grupo5.obter_resultado_ano_piloto(:idPiloto)", nativeQuery = true)
     List<DadosRelatorioResultados> obterResultados(Integer idPiloto);
+
+    @Query(value = "SELECT * FROM grupo5.relatorio_piloto_6(:idPiloto)", nativeQuery = true)
+    List<DadosListagemPontuacao> obterRelatorioPontuacao(Integer idPiloto);
+
+    @Query(value = "SELECT * FROM grupo5.relatorio_piloto_7(:idPiloto)", nativeQuery = true)
+    List<DadosListagemQuantidadeItem> obterRelatorioStatus(Integer idPiloto);
 
 }

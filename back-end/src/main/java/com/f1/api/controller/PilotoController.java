@@ -1,9 +1,11 @@
 package com.f1.api.controller;
 
+import com.f1.api.dto.DadosListagemQuantidadeItem;
 import com.f1.api.dto.piloto.DadosCadastroPiloto;
 import com.f1.api.domain.piloto.Piloto;
 import com.f1.api.domain.piloto.PilotoRepository;
 import com.f1.api.dto.DadosListagemPeriodo;
+import com.f1.api.dto.piloto.DadosListagemPontuacao;
 import com.f1.api.dto.piloto.DadosRelatorioResultados;
 import jakarta.validation.Valid;
 import org.springframework.transaction.annotation.Transactional;
@@ -39,6 +41,16 @@ public class PilotoController {
     @GetMapping("/{id}/dashboard/resultados")
     public List<DadosRelatorioResultados> visualizarDashboardResultados(@PathVariable Integer id) {
         return pilotoRepository.obterResultados(id);
+    }
+
+    @GetMapping("{id}/relatorio/pontuacao")
+    public List<DadosListagemPontuacao> visualizarRelatorioPontuacao(@PathVariable Integer id) {
+        return pilotoRepository.obterRelatorioPontuacao(id);
+    }
+
+    @GetMapping("{id}/relatorio/status")
+    public List<DadosListagemQuantidadeItem> visualizarRelatorioStatus(@PathVariable Integer id) {
+        return pilotoRepository.obterRelatorioStatus(id);
     }
 
 }

@@ -5,6 +5,7 @@ import com.f1.api.domain.escuderia.Escuderia;
 import com.f1.api.domain.escuderia.EscuderiaRepository;
 import com.f1.api.domain.piloto.Piloto;
 import com.f1.api.domain.piloto.PilotoRepository;
+import com.f1.api.dto.DadosListagemQuantidadeItem;
 import com.f1.api.dto.admin.*;
 import com.f1.api.dto.escuderia.DadosCadastroEscuderia;
 import com.f1.api.dto.piloto.DadosCadastroPiloto;
@@ -63,12 +64,12 @@ public class AdminController {
     }
 
     @GetMapping("/relatorio/status")
-    public List<DadosListagemQuantidadeItem> visualizarDashboardStatus() {
+    public List<DadosListagemQuantidadeItem> visualizarRelatorioStatus() {
         return adminRepository.obterRelatorioStatus();
     }
 
     @GetMapping("/relatorio/aeroportos/{cidade}")
-    public List<DadosListagemCidadeAeroporto> visualizarDashboardStatus(@PathVariable String cidade) {
+    public List<DadosListagemCidadeAeroporto> visualizarRelatorioCidadeAeroportos(@PathVariable String cidade) {
         return adminRepository.obterRelatorioCidadeAeroportos(cidade);
     }
 

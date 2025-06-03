@@ -4,6 +4,7 @@ import com.f1.api.domain.escuderia.EscuderiaRepository;
 import com.f1.api.dto.*;
 import com.f1.api.domain.piloto.Piloto;
 import com.f1.api.domain.piloto.PilotoRepository;
+import com.f1.api.dto.escuderia.DadosListagemVitoriasPiloto;
 import com.f1.api.dto.piloto.DadosCadastroPiloto;
 import com.f1.api.dto.piloto.DadosListagemPiloto;
 import jakarta.validation.Valid;
@@ -30,7 +31,6 @@ public class EscuderiaController {
     @Transactional
     public void cadastrarPiloto(@RequestBody @Valid DadosCadastroPiloto dados) {
         var piloto = new Piloto(dados);
-        System.out.println(dados);
         pilotoRepository.inserirPiloto(piloto.getReferencia(), piloto.getNumero(), piloto.getCodigo(), piloto.getNome(), piloto.getSobrenome(), piloto.getDataNascimento(), piloto.getNacionalidade(), piloto.getUrl());
     }
 
@@ -55,4 +55,13 @@ public class EscuderiaController {
         return escuderiaRepository.obterPeriodo(id);
     }
 
+    @GetMapping("{id}/relatorio/vitorias-pilotos")
+    public List<DadosListagemVitoriasPiloto> visualizarRelatorioVitoriasPilotos(@PathVariable Integer id) {
+        return escuderiaRepository.obterRelatorioPilotosVitorias(id);
+    }
+
+    @GetMapping("{id}/relatorio/status")
+    public List<DadosListagemQuantidadeItem> visualizarRelatorioStatus(@PathVariable Integer id) {
+        return escuderiaRepository.obterRelatorioStatus(id);
+    }
 }

@@ -1,5 +1,6 @@
 package com.f1.api.domain.admin;
 
+import com.f1.api.dto.DadosListagemQuantidadeItem;
 import com.f1.api.dto.admin.*;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

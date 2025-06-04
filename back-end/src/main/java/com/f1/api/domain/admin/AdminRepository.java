@@ -27,4 +27,16 @@ public interface AdminRepository extends JpaRepository<Admin, Integer> {
     @Query(value = "SELECT * FROM grupo5.relatorio_admin_2(:cidade)", nativeQuery = true)
     List<DadosListagemCidadeAeroporto> obterRelatorioCidadeAeroportos(String cidade);
 
+    @Query(value = "SELECT * FROM grupo5.relatorio_admin_3()", nativeQuery = true)
+    List<DadosListagemPilotosEscuderias> obterRelatorioPilotosEscuderias();
+
+    @Query(value = "SELECT * FROM grupo5.relatorio_admin_3_1()", nativeQuery = true)
+    List<DadosListagemCorridasEscuderias> obterRelatorioCorridasEscuderias();
+
+    @Query(value = "SELECT * FROM grupo5.relatorio_admin_3_2(:nomeEscuderia)", nativeQuery = true)
+    List<DadosListagemCircuitosEscuderia> obterRelatorioCircuitosEscuderia(String nomeEscuderia);
+
+    @Query(value = "SELECT * FROM grupo5.relatorio_admin_3_3(:nomeEscuderia)", nativeQuery = true)
+    List<DadosListagemCorridasEscuderia> obterRelatorioCorridasEscuderia(String nomeEscuderia);
+
 }

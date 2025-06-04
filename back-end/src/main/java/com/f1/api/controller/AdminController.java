@@ -1,6 +1,6 @@
 package com.f1.api.controller;
 
-import com.f1.api.domain.admin.*;
+import com.f1.api.domain.admin.AdminRepository;
 import com.f1.api.domain.escuderia.Escuderia;
 import com.f1.api.domain.escuderia.EscuderiaRepository;
 import com.f1.api.domain.piloto.Piloto;
@@ -74,4 +74,23 @@ public class AdminController {
         return ResponseEntity.ok(adminRepository.obterRelatorioCidadeAeroportos(cidade));
     }
 
+    @GetMapping("/relatorio/escuderias/pilotos")
+    public ResponseEntity<List<DadosListagemPilotosEscuderias>> visualizarRelatorioPilotosEscuderias() {
+        return ResponseEntity.ok(adminRepository.obterRelatorioPilotosEscuderias());
+    }
+
+    @GetMapping("/relatorio/escuderias/corridas")
+    public ResponseEntity<List<DadosListagemCorridasEscuderias>> visualizarRelatorioCorridasEscuderias() {
+        return ResponseEntity.ok(adminRepository.obterRelatorioCorridasEscuderias());
+    }
+
+    @GetMapping("/relatorio/escuderias/{nome}/circuitos")
+    public ResponseEntity<List<DadosListagemCircuitosEscuderia>> visualizarRelatorioCircuitosEscuderia(@PathVariable String nome) {
+        return ResponseEntity.ok(adminRepository.obterRelatorioCircuitosEscuderia(nome));
+    }
+
+    @GetMapping("/relatorio/escuderias/{nome}/corridas")
+    public ResponseEntity<List<DadosListagemCorridasEscuderia>> visualizarRelatorioCorridasEscuderia(@PathVariable String nome) {
+        return ResponseEntity.ok(adminRepository.obterRelatorioCorridasEscuderia(nome));
+    }
 }

@@ -57,72 +57,34 @@ public class Piloto {
         return id;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
     public String getReferencia() {
         return referencia;
-    }
-
-    public void setReferencia(String referencia) {
-        this.referencia = referencia;
     }
 
     public Integer getNumero() {
         return numero;
     }
 
-    public void setNumero(Integer numero) {
-        this.numero = numero;
-    }
-
-    public String getCodigo() {
-        return codigo;
-    }
-
-    public void setCodigo(String codigo) {
-        this.codigo = codigo;
-    }
+    public String getCodigo() { return codigo; }
 
     public String getNome() {
         return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
     }
 
     public String getSobrenome() {
         return sobrenome;
     }
 
-    public void setSobrenome(String sobrenome) {
-        this.sobrenome = sobrenome;
-    }
-
     public LocalDate getDataNascimento() {
         return dataNascimento;
-    }
-
-    public void setDataNascimento(LocalDate dataNascimento) {
-        this.dataNascimento = dataNascimento;
     }
 
     public String getNacionalidade() {
         return nacionalidade;
     }
 
-    public void setNacionalidade(String nacionalidade) {
-        this.nacionalidade = nacionalidade;
-    }
-
     public String getUrl() {
         return url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
     }
 
     @Override

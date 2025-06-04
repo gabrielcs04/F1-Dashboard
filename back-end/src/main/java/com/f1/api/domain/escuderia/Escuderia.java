@@ -40,40 +40,20 @@ public class Escuderia {
         return id;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
     public String getReferencia() {
         return referencia;
-    }
-
-    public void setReferencia(String referencia) {
-        this.referencia = referencia;
     }
 
     public String getNome() {
         return nome;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
     public String getNacionalidade() {
         return nacionalidade;
     }
 
-    public void setNacionalidade(String nacionalidade) {
-        this.nacionalidade = nacionalidade;
-    }
-
     public String getUrl() {
         return url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
     }
 
     @Override

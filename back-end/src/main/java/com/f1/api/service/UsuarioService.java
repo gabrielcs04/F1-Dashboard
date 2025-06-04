@@ -17,7 +17,7 @@ public class UsuarioService {
         this.usuarioRepository = usuarioRepository;
     }
 
-    public DadosListagemUsuario autenticarUsuario(String login, String senha) {
+    public Usuario autenticarUsuario(String login, String senha) {
         Usuario usuario = usuarioRepository.buscarPorLogin(login);
         if (usuario == null) {
             throw new RuntimeException("Usuário não encontrado.");
@@ -28,7 +28,7 @@ public class UsuarioService {
             throw new RuntimeException("Senha incorreta.");
         }
 
-        return new DadosListagemUsuario(usuario);
+        return usuario;
     }
 
 

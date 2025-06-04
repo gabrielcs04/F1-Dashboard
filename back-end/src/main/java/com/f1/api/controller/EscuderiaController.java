@@ -8,6 +8,7 @@ import com.f1.api.dto.escuderia.DadosListagemVitoriasPiloto;
 import com.f1.api.dto.piloto.DadosCadastroPiloto;
 import com.f1.api.dto.piloto.DadosListagemPiloto;
 import jakarta.validation.Valid;
+import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
@@ -36,32 +37,32 @@ public class EscuderiaController {
 
 
     @GetMapping("/{id}/pilotos")
-    public List<DadosListagemPiloto> consultarPorSobrenomeEIdEscuderia(@PathVariable Integer id, @RequestParam String sobrenome) {
-        return pilotoRepository.consultarPorSobrenomeEIdEscuderia(sobrenome, id).stream().map(DadosListagemPiloto::new).collect(Collectors.toList());
+    public ResponseEntity<List<DadosListagemPiloto>> consultarPorSobrenomeEIdEscuderia(@PathVariable Integer id, @RequestParam String sobrenome) {
+        return ResponseEntity.ok(pilotoRepository.consultarPorSobrenomeEIdEscuderia(sobrenome, id).stream().map(DadosListagemPiloto::new).collect(Collectors.toList()));
     }
 
     @GetMapping("/{id}/dashboard/vitorias")
-    public DadosListagemQuantidade visualizarDashboardVitorias(@PathVariable Integer id) {
-        return escuderiaRepository.obterVitorias(id);
+    public ResponseEntity<DadosListagemQuantidade> visualizarDashboardVitorias(@PathVariable Integer id) {
+        return ResponseEntity.ok(escuderiaRepository.obterVitorias(id));
     }
 
     @GetMapping("/{id}/dashboard/pilotos")
-    public DadosListagemQuantidade visualizarDashboardQtdPilotos(@PathVariable Integer id) {
-        return escuderiaRepository.obterQtdPilotos(id);
+    public ResponseEntity<DadosListagemQuantidade> visualizarDashboardQtdPilotos(@PathVariable Integer id) {
+        return ResponseEntity.ok(escuderiaRepository.obterQtdPilotos(id));
     }
 
     @GetMapping("/{id}/dashboard/periodo")
-    public DadosListagemPeriodo visualizarDashboardPeriodo(@PathVariable Integer id) {
-        return escuderiaRepository.obterPeriodo(id);
+    public ResponseEntity<DadosListagemPeriodo> visualizarDashboardPeriodo(@PathVariable Integer id) {
+        return ResponseEntity.ok(escuderiaRepository.obterPeriodo(id));
     }
 
     @GetMapping("{id}/relatorio/vitorias-pilotos")
-    public List<DadosListagemVitoriasPiloto> visualizarRelatorioVitoriasPilotos(@PathVariable Integer id) {
-        return escuderiaRepository.obterRelatorioPilotosVitorias(id);
+    public ResponseEntity<List<DadosListagemVitoriasPiloto>> visualizarRelatorioVitoriasPilotos(@PathVariable Integer id) {
+        return ResponseEntity.ok(escuderiaRepository.obterRelatorioPilotosVitorias(id));
     }
 
     @GetMapping("{id}/relatorio/status")
-    public List<DadosListagemQuantidadeItem> visualizarRelatorioStatus(@PathVariable Integer id) {
-        return escuderiaRepository.obterRelatorioStatus(id);
+    public ResponseEntity<List<DadosListagemQuantidadeItem>> visualizarRelatorioStatus(@PathVariable Integer id) {
+        return ResponseEntity.ok(escuderiaRepository.obterRelatorioStatus(id));
     }
 }

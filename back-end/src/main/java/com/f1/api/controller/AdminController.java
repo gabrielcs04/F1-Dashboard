@@ -10,6 +10,7 @@ import com.f1.api.dto.admin.*;
 import com.f1.api.dto.escuderia.DadosCadastroEscuderia;
 import com.f1.api.dto.piloto.DadosCadastroPiloto;
 import jakarta.validation.Valid;
+import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
@@ -44,33 +45,33 @@ public class AdminController {
     }
 
     @GetMapping("/dashboard/visao-geral")
-    public DadosRelatorioVisaoGeral visualizarDashboardVisaoGeral() {
-        return adminRepository.obterVisaoGeral();
+    public ResponseEntity<DadosRelatorioVisaoGeral> visualizarDashboardVisaoGeral() {
+        return ResponseEntity.ok(adminRepository.obterVisaoGeral());
     }
 
     @GetMapping("/dashboard/corridas/{ano}")
-    public List<DadosListagemCorridas> visualizarDashboardCorridasAno(@PathVariable Integer ano) {
-        return adminRepository.obterCorridasAno(ano);
+    public ResponseEntity<List<DadosListagemCorridas>> visualizarDashboardCorridasAno(@PathVariable Integer ano) {
+        return ResponseEntity.ok(adminRepository.obterCorridasAno(ano));
     }
 
     @GetMapping("/dashboard/escuderias/{ano}")
-    public List<DadosListagemPontuacaoItem> visualizarDashboardEscuderiasAno(@PathVariable Integer ano) {
-        return adminRepository.obterEscuderiasAno(ano);
+    public ResponseEntity<List<DadosListagemPontuacaoItem>> visualizarDashboardEscuderiasAno(@PathVariable Integer ano) {
+        return ResponseEntity.ok(adminRepository.obterEscuderiasAno(ano));
     }
 
     @GetMapping("/dashboard/pilotos/{ano}")
-    public List<DadosListagemPontuacaoItem> visualizarDashboardPilotosAno(@PathVariable Integer ano) {
-        return adminRepository.obterPilotosAno(ano);
+    public ResponseEntity<List<DadosListagemPontuacaoItem>> visualizarDashboardPilotosAno(@PathVariable Integer ano) {
+        return ResponseEntity.ok(adminRepository.obterPilotosAno(ano));
     }
 
     @GetMapping("/relatorio/status")
-    public List<DadosListagemQuantidadeItem> visualizarRelatorioStatus() {
-        return adminRepository.obterRelatorioStatus();
+    public ResponseEntity<List<DadosListagemQuantidadeItem>> visualizarRelatorioStatus() {
+        return ResponseEntity.ok(adminRepository.obterRelatorioStatus());
     }
 
     @GetMapping("/relatorio/aeroportos/{cidade}")
-    public List<DadosListagemCidadeAeroporto> visualizarRelatorioCidadeAeroportos(@PathVariable String cidade) {
-        return adminRepository.obterRelatorioCidadeAeroportos(cidade);
+    public ResponseEntity<List<DadosListagemCidadeAeroporto>> visualizarRelatorioCidadeAeroportos(@PathVariable String cidade) {
+        return ResponseEntity.ok(adminRepository.obterRelatorioCidadeAeroportos(cidade));
     }
 
 }

@@ -8,6 +8,7 @@ import com.f1.api.dto.DadosListagemPeriodo;
 import com.f1.api.dto.piloto.DadosListagemPontuacao;
 import com.f1.api.dto.piloto.DadosRelatorioResultados;
 import jakarta.validation.Valid;
+import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
@@ -34,23 +35,23 @@ public class PilotoController {
     }
 
     @GetMapping("/{id}/dashboard/periodo")
-    public DadosListagemPeriodo visualizarDashboardPeriodo(@PathVariable Integer id) {
-        return pilotoRepository.obterPeriodo(id);
+    public ResponseEntity<DadosListagemPeriodo> visualizarDashboardPeriodo(@PathVariable Integer id) {
+        return ResponseEntity.ok(pilotoRepository.obterPeriodo(id));
     }
 
     @GetMapping("/{id}/dashboard/resultados")
-    public List<DadosRelatorioResultados> visualizarDashboardResultados(@PathVariable Integer id) {
-        return pilotoRepository.obterResultados(id);
+    public ResponseEntity<List<DadosRelatorioResultados>> visualizarDashboardResultados(@PathVariable Integer id) {
+        return ResponseEntity.ok(pilotoRepository.obterResultados(id));
     }
 
     @GetMapping("{id}/relatorio/pontuacao")
-    public List<DadosListagemPontuacao> visualizarRelatorioPontuacao(@PathVariable Integer id) {
-        return pilotoRepository.obterRelatorioPontuacao(id);
+    public ResponseEntity<List<DadosListagemPontuacao>> visualizarRelatorioPontuacao(@PathVariable Integer id) {
+        return ResponseEntity.ok(pilotoRepository.obterRelatorioPontuacao(id));
     }
 
     @GetMapping("{id}/relatorio/status")
-    public List<DadosListagemQuantidadeItem> visualizarRelatorioStatus(@PathVariable Integer id) {
-        return pilotoRepository.obterRelatorioStatus(id);
+    public ResponseEntity<List<DadosListagemQuantidadeItem>> visualizarRelatorioStatus(@PathVariable Integer id) {
+        return ResponseEntity.ok(pilotoRepository.obterRelatorioStatus(id));
     }
 
 }

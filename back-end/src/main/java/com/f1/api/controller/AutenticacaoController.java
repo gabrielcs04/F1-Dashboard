@@ -3,6 +3,7 @@ package com.f1.api.controller;
 import com.f1.api.domain.usuario.Usuario;
 import com.f1.api.dto.usuario.DadosListagemUsuario;
 import com.f1.api.dto.usuario.DadosLoginUsuario;
+import com.f1.api.infra.security.DadosTokenJWT;
 import com.f1.api.infra.security.TokenService;
 import com.f1.api.service.UsuarioService;
 import org.springframework.http.HttpStatus;
@@ -35,7 +36,7 @@ public class AutenticacaoController {
         }
 
         String token = tokenService.gerarToken(usuario);
-        return ResponseEntity.ok(Map.of("token", token));
+        return ResponseEntity.ok(new DadosTokenJWT(token));
     }
 
 }

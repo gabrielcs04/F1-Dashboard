@@ -7,11 +7,13 @@ import com.f1.api.dto.piloto.DadosRelatorioResultados;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.List;
 
+@Repository
 public interface PilotoRepository extends JpaRepository<Piloto, Integer> {
 
     @Modifying

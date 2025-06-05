@@ -1,6 +1,7 @@
 package com.f1.api.controller;
 
 import com.f1.api.domain.usuario.Usuario;
+import com.f1.api.domain.usuarioLog.UsuarioLogRepository;
 import com.f1.api.dto.usuario.DadosListagemUsuario;
 import com.f1.api.dto.usuario.DadosLoginUsuario;
 import com.f1.api.infra.security.DadosTokenJWT;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.time.LocalDateTime;
 import java.util.Map;
 
 @RestController
@@ -21,10 +23,13 @@ public class AutenticacaoController {
 
     private final UsuarioService usuarioService;
     private final TokenService tokenService;
+    private final UsuarioLogRepository usuarioLogRepository;
 
-    public AutenticacaoController(UsuarioService usuarioService,TokenService tokenService) {
+
+    public AutenticacaoController(UsuarioService usuarioService,TokenService tokenService, UsuarioLogRepository usuarioLogRepository) {
         this.usuarioService = usuarioService;
         this.tokenService = tokenService;
+        this.usuarioLogRepository = usuarioLogRepository;
     }
 
     @PostMapping("/login")
@@ -34,6 +39,8 @@ public class AutenticacaoController {
         if (usuario == null) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Credenciais inválidas");
         }
+
+        usuarioLogRepository.inserirLoginLog(usuario.getId(), LocalDateTime.now());
 
         String token = tokenService.gerarToken(usuario);
         return ResponseEntity.ok(new DadosTokenJWT(token));

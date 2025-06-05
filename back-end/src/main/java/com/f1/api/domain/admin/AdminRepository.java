@@ -4,9 +4,11 @@ import com.f1.api.dto.DadosListagemQuantidadeItem;
 import com.f1.api.dto.admin.*;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+@Repository
 public interface AdminRepository extends JpaRepository<Admin, Integer> {
 
     @Query(value = "SELECT * FROM grupo5.obter_visao_geral()", nativeQuery = true)

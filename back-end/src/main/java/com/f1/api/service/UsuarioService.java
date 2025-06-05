@@ -2,7 +2,6 @@ package com.f1.api.service;
 
 import com.f1.api.domain.usuario.Usuario;
 import com.f1.api.domain.usuario.UsuarioRepository;
-import com.f1.api.dto.usuario.DadosListagemUsuario;
 import org.springframework.stereotype.Service;
 
 import java.security.MessageDigest;

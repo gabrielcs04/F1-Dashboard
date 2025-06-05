@@ -50,4 +50,13 @@ public class TokenService {
         return LocalDateTime.now().plusHours(24).toInstant(ZoneOffset.of("-03:00"));
     }
 
+    public Integer extrairIdUsuario(String token) {
+        return JWT.decode(token).getClaim("idOriginal").asInt();
+    }
+
+    public String extrairTipoUsuario(String token) {
+        return JWT.decode(token).getClaim("role").asString();
+    }
+
+
 }

@@ -25,7 +25,6 @@ public class AutenticacaoController {
     private final TokenService tokenService;
     private final UsuarioLogRepository usuarioLogRepository;
 
-
     public AutenticacaoController(UsuarioService usuarioService,TokenService tokenService, UsuarioLogRepository usuarioLogRepository) {
         this.usuarioService = usuarioService;
         this.tokenService = tokenService;

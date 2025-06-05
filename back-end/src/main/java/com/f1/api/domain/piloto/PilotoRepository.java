@@ -3,6 +3,7 @@ package com.f1.api.domain.piloto;
 import com.f1.api.dto.DadosListagemPeriodo;
 import com.f1.api.dto.DadosListagemQuantidadeItem;
 import com.f1.api.dto.piloto.DadosListagemPontuacao;
+import com.f1.api.dto.piloto.DadosNomePiloto;
 import com.f1.api.dto.piloto.DadosRelatorioResultados;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -12,9 +13,13 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface PilotoRepository extends JpaRepository<Piloto, Integer> {
+
+    @Query(value = "SELECT forename, surname FROM grupo5.driver WHERE driverid = :idPiloto", nativeQuery = true)
+    Optional<DadosNomePiloto> obterNomePorId(Integer idPiloto);
 
     @Modifying
     @Transactional

@@ -12,9 +12,20 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface EscuderiaRepository extends JpaRepository<Escuderia, Integer> {
+
+    @Query(value = "SELECT name FROM grupo5.constructors WHERE constructorid = :idEscuderia", nativeQuery = true)
+    Optional<String> obterNomePorId(Integer idEscuderia);
+
+    @Query(value = """
+        SELECT COUNT(DISTINCT driverid)
+        FROM grupo5.results
+        WHERE constructorid = :idEscuderia
+        """, nativeQuery = true)
+    Long obterQtdePilotosDistintosPorIdEscuderia(Integer idEscuderia);
 
     @Modifying
     @Transactional

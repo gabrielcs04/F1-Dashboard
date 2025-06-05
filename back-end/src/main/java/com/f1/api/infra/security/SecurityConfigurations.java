@@ -37,6 +37,7 @@ public class SecurityConfigurations {
                 .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/auth/**").permitAll()
+                        .requestMatchers("/info-usuario").permitAll()
                         .requestMatchers("/admin/**").hasRole("ADMIN")
                         .requestMatchers("/escuderias/**").hasRole("ESCUDERIA")
                         .requestMatchers("/pilotos/**").hasRole("PILOTO")
@@ -46,7 +47,6 @@ public class SecurityConfigurations {
 
         return http.build();
     }
-
 
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {

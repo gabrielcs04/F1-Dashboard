@@ -22,13 +22,24 @@ export function LoginForm() {
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault()
+
+    if (!login.trim() || !senha.trim()) {
+      setError("Por favor, preencha todos os campos")
+      return
+    }
+
     setLoading(true)
     setError("")
 
     try {
+      console.log("Tentando fazer login com:", { login, senha: "***" })
+
       const userData = await authService.login(login, senha)
+
+      console.log("Login bem-sucedido:", userData)
       setUser(userData)
     } catch (err) {
+      console.error("Erro no login:", err)
       setError(err instanceof Error ? err.message : "Erro ao fazer login")
     } finally {
       setLoading(false)
@@ -87,9 +98,9 @@ export function LoginForm() {
                 <AlertDescription>{error}</AlertDescription>
               </Alert>
             )}
-            <Button type="submit" className="w-full" disabled={loading}>
+            <Button type="submit" className="w-full" disabled={loading || !login.trim() || !senha.trim()}>
               {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-              Entrar
+              {loading ? "Entrando..." : "Entrar"}
             </Button>
           </form>
 

@@ -6,8 +6,11 @@ export class BaseService {
 
   // Método para fazer requisições autenticadas
   protected async fetchWithAuth(url: string, options: RequestInit = {}): Promise<Response> {
+    const token = authService.getToken()
+
     const headers = {
-      ...authService.getAuthHeaders(),
+      "Content-Type": "application/json",
+      ...(token && { Authorization: `Bearer ${token}` }),
       ...options.headers,
     }
 

@@ -11,8 +11,6 @@ import { authService } from "./auth-service"
 import { BaseService } from "./base-service"
 
 class EscuderiaService extends BaseService {
-  private baseUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8080"
-
   // Combina as 3 funções PostgreSQL para obter estatísticas completas
   // - grupo5.obter_vitorias_escuderia(:idEscuderia)
   // - grupo5.obter_qtd_pilotos_escuderia(:idEscuderia)
@@ -76,12 +74,11 @@ class EscuderiaService extends BaseService {
     return response.json()
   }
 
-  // Upload de arquivo de pilotos
+  // Upload de arquivo de pilotos (método legado - mantido para compatibilidade)
   async uploadDrivers(escuderiaId: number, file: File): Promise<void> {
     const formData = new FormData()
     formData.append("file", file)
 
-    // Adicionando o token ao cabeçalho, mas sem o Content-Type para que o navegador defina o boundary correto
     const token = authService.getToken()
     const headers: HeadersInit = token ? { Authorization: `Bearer ${token}` } : {}
 
@@ -96,7 +93,7 @@ class EscuderiaService extends BaseService {
     }
   }
 
-  // INSERT INTO grupo5.driver
+  // INSERT INTO grupo5.driver - Endpoint específico da escuderia
   async createDriver(data: DadosCadastroPiloto): Promise<void> {
     const response = await this.fetchWithAuth(`${this.baseUrl}/escuderias/pilotos`, {
       method: "POST",

@@ -50,8 +50,7 @@ export function PilotoDashboard({ user }: PilotoDashboardProps) {
 
   return (
     <div className="space-y-6">
-      <h2 className="text-2xl font-bold text-gray-900">Dashboard - {user.name || user.login}</h2>
-      <p className="text-sm text-gray-600">Estatísticas baseadas em stored procedures/functions do PostgreSQL</p>
+      <h2 className="text-2xl font-bold text-gray-900">Dashboard Piloto</h2>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <Card>

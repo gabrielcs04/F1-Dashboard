@@ -19,6 +19,8 @@ export function DashboardLayout({ user, onLogout }: DashboardLayoutProps) {
   const [currentView, setCurrentView] = useState<"dashboard" | "reports" | "actions">("dashboard")
 
   const renderDashboard = () => {
+    console.log("Renderizando dashboard para tipo:", user.tipo)
+
     switch (user.tipo) {
       case "ADMIN":
         return <AdminDashboard />
@@ -27,7 +29,15 @@ export function DashboardLayout({ user, onLogout }: DashboardLayoutProps) {
       case "PILOTO":
         return <PilotoDashboard user={user} />
       default:
-        return null
+        console.warn("Tipo de usuário não reconhecido:", user.tipo)
+        return (
+          <div className="text-center py-8">
+            <p className="text-red-600">Tipo de usuário não reconhecido: {user.tipo}</p>
+            <Button onClick={onLogout} className="mt-4">
+              Fazer Login Novamente
+            </Button>
+          </div>
+        )
     }
   }
 

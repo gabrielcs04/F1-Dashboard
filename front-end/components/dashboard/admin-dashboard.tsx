@@ -16,7 +16,7 @@ export function AdminDashboard() {
   const [races, setRaces] = useState<DadosListagemCorridas[]>([])
   const [teams, setTeams] = useState<DadosListagemPontuacaoItem[]>([])
   const [drivers, setDrivers] = useState<DadosListagemPontuacaoItem[]>([])
-  const [selectedYear, setSelectedYear] = useState<number>(new Date().getFullYear())
+  const [selectedYear, setSelectedYear] = useState<number>(new Date().getFullYear() - 1)
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
@@ -81,8 +81,7 @@ export function AdminDashboard() {
 
   return (
     <div className="space-y-6">
-      <h2 className="text-2xl font-bold text-gray-900">Dashboard Administrativo</h2>
-      <p className="text-sm text-gray-600">Estatísticas baseadas em stored procedures/functions do PostgreSQL</p>
+      <h2 className="text-2xl font-bold text-gray-900">Dashboard Administrador</h2>
 
       {/* Estatísticas Gerais - Função: grupo5.obter_visao_geral() */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">

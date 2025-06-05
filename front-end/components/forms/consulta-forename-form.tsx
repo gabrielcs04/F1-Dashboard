@@ -37,6 +37,14 @@ export function ConsultaForenameForm({ onClose, escuderiaId }: ConsultaForenameF
     }
   }
 
+  const formatDate = (dateString: string) => {
+    try {
+      return new Date(dateString).toLocaleDateString("pt-BR")
+    } catch {
+      return dateString
+    }
+  }
+
   return (
     <Card>
       <CardHeader>
@@ -81,7 +89,7 @@ export function ConsultaForenameForm({ onClose, escuderiaId }: ConsultaForenameF
                     <strong>Nome:</strong> {pilot.nomeCompleto}
                   </p>
                   <p>
-                    <strong>Data de Nascimento:</strong> {pilot.dataNascimento}
+                    <strong>Data de Nascimento:</strong> {formatDate(pilot.dataNascimento)}
                   </p>
                   <p>
                     <strong>Nacionalidade:</strong> {pilot.nacionalidade}

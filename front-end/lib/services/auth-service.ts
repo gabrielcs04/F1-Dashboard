@@ -1,65 +1,103 @@
-import type { User, DadosLoginUsuario, DadosTokenJWT, TipoUsuario } from "@/lib/types"
+import type { User, DadosTokenJWT } from "@/lib/types"
+import { Tipo } from "@/lib/types"
+import { debugToken } from "@/lib/utils/debug"
 
 class AuthService {
   private baseUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8080"
   private tokenKey = "f1_auth_token"
 
   async login(login: string, senha: string): Promise<User> {
-    const loginData: DadosLoginUsuario = { login, senha }
+    try {
+      const response = await fetch(`${this.baseUrl}/auth/login`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify({ login, senha }),
+      })
 
-    const response = await fetch(`${this.baseUrl}/auth/login`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-      },
-      body: JSON.stringify(loginData),
-    })
-
-    if (!response.ok) {
-      if (response.status === 401) {
-        throw new Error("Credenciais inválidas")
+      if (!response.ok) {
+        if (response.status === 401) {
+          throw new Error("Credenciais inválidas")
+        }
+        throw new Error(`Erro no servidor: ${response.status}`)
       }
-      throw new Error("Erro no servidor")
+
+      const tokenData: DadosTokenJWT = await response.json()
+
+      // Debug do token (remover em produção)
+      if (process.env.NODE_ENV === "development") {
+        debugToken(tokenData.token)
+      }
+
+      // Armazenar o token
+      localStorage.setItem(this.tokenKey, tokenData.token)
+
+      // Buscar informações adicionais do usuário
+      const userInfo = await this.fetchUserInfo(tokenData.token)
+
+      // Decodificar o token para obter dados do usuário
+      const userData = this.decodeToken(tokenData.token, userInfo.info)
+
+      return userData
+    } catch (error) {
+      console.error("Erro no login:", error)
+      if (error instanceof Error) {
+        throw error
+      }
+      throw new Error("Erro inesperado durante o login")
     }
-
-    const tokenData: DadosTokenJWT = await response.json()
-
-    // Armazenar o token
-    localStorage.setItem(this.tokenKey, tokenData.token)
-
-    // Decodificar o token para obter dados do usuário
-    const userData = this.decodeToken(tokenData.token)
-
-    // Registrar log de login
-    await this.logAccess(userData.id.toString())
-
-    return userData
   }
 
-  private decodeToken(token: string): User {
+  async fetchUserInfo(token: string): Promise<any> {
+    try {
+      const response = await fetch(`${this.baseUrl}/info-usuario`, {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          Accept: "application/json",
+        },
+      })
+
+      if (!response.ok) {
+        throw new Error(`Erro ao buscar informações do usuário: ${response.status}`)
+      }
+
+      return await response.json()
+    } catch (error) {
+      console.error("Erro ao buscar informações do usuário:", error)
+      throw error
+    }
+  }
+
+  private decodeToken(token: string, userInfo?: string): User {
     try {
       // Decodificar JWT payload (base64)
       const payload = JSON.parse(atob(token.split(".")[1]))
+
+      console.log("Token payload:", payload) // Para debug
 
       // Extrair claims conforme definido no TokenService.java
       // - sub: "usuario" (fixo)
       // - idOriginal: ID na tabela específica do tipo
       // - role: ADMIN, PILOTO ou ESCUDERIA
+      // - iss: "API F1"
+      // - exp: timestamp de expiração
 
       const tipoBackend = payload.role
       const tipoFrontend = this.mapTipoToFrontend(tipoBackend)
       const idOriginal = payload.idOriginal
 
-      // Gerar um ID único para o usuário (pode ser o próprio idOriginal)
-      const id = payload.id || idOriginal
+      // Gerar um ID único para o usuário (usando idOriginal)
+      const id = idOriginal
 
       return {
         id,
-        login: payload.login || payload.sub,
+        login: userInfo || `user_${idOriginal}`,
         tipo: tipoFrontend,
         idOriginal,
-        name: this.generateDisplayName(payload.login || "usuario", tipoFrontend),
+        name: (userInfo || `user_${idOriginal}`).toUpperCase()
       }
     } catch (error) {
       console.error("Erro ao decodificar token:", error)
@@ -67,31 +105,31 @@ class AuthService {
     }
   }
 
-  // Mapeia o tipo do backend (ADMIN, PILOTO, ESCUDERIA) para o formato do frontend
-  private mapTipoToFrontend(tipo: string): TipoUsuario {
+  // Mapeia o tipo do backend (ADMIN, PILOTO, ESCUDERIA) para o enum Tipo
+  private mapTipoToFrontend(tipo: string): Tipo {
     // Normaliza o tipo para maiúsculas para garantir compatibilidade
     const tipoUpper = tipo.toUpperCase()
 
     if (tipoUpper === "ADMIN") {
-      return "ADMIN"
+      return Tipo.ADMIN
     } else if (tipoUpper === "PILOTO") {
-      return "PILOTO"
+      return Tipo.PILOTO
     } else if (tipoUpper === "ESCUDERIA") {
-      return "ESCUDERIA"
+      return Tipo.ESCUDERIA
     }
 
     // Fallback para ADMIN se o tipo não for reconhecido
     console.warn(`Tipo não reconhecido: ${tipo}, usando ADMIN como fallback`)
-    return "ADMIN"
+    return Tipo.ADMIN
   }
 
-  private generateDisplayName(login: string, tipo: TipoUsuario): string {
+  private generateDisplayName(login: string, tipo: Tipo): string {
     switch (tipo) {
-      case "ADMIN":
+      case Tipo.ADMIN:
         return "Administrador do Sistema"
-      case "ESCUDERIA":
+      case Tipo.ESCUDERIA:
         return login.toUpperCase()
-      case "PILOTO":
+      case Tipo.PILOTO:
         return login.charAt(0).toUpperCase() + login.slice(1)
       default:
         return login
@@ -130,23 +168,6 @@ class AuthService {
     }
   }
 
-  private async logAccess(userid: string): Promise<void> {
-    try {
-      const token = this.getToken()
-      await fetch(`${this.baseUrl}/users/log`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({ userid }),
-      })
-    } catch (error) {
-      console.error("Erro ao registrar log de acesso:", error)
-    }
-  }
-
-  // Método para adicionar token nas requisições
   getAuthHeaders(): Record<string, string> {
     const token = this.getToken()
     return token

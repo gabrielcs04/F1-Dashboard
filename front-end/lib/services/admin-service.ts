@@ -4,6 +4,10 @@ import type {
   DadosListagemPontuacaoItem,
   DadosListagemQuantidadeItem,
   DadosListagemCidadeAeroporto,
+  DadosListagemPilotosEscuderias,
+  DadosListagemCorridasEscuderias,
+  DadosListagemCircuitosEscuderia,
+  DadosListagemCorridasEscuderia,
   DadosCadastroEscuderia,
   DadosCadastroPiloto,
 } from "@/lib/types"
@@ -52,13 +56,50 @@ class AdminService extends BaseService {
     if (!response.ok) {
       return this.handleResponseError(response, "Erro ao gerar relatório")
     }
-    return response.json()
+    return await response.json()
   }
 
   // Função: grupo5.relatorio_admin_2(:cidade)
   async getAirportsReport(cityName: string): Promise<DadosListagemCidadeAeroporto[]> {
     const response = await this.fetchWithAuth(
       `${this.baseUrl}/admin/relatorio/aeroportos/${encodeURIComponent(cityName)}`,
+    )
+    if (!response.ok) {
+      return this.handleResponseError(response, "Erro ao gerar relatório")
+    }
+    return response.json()
+  }
+
+  // Novos relatórios baseados no AdminController
+  async getPilotosEscuderiasReport(): Promise<DadosListagemPilotosEscuderias[]> {
+    const response = await this.fetchWithAuth(`${this.baseUrl}/admin/relatorio/escuderias/pilotos`)
+    if (!response.ok) {
+      return this.handleResponseError(response, "Erro ao gerar relatório")
+    }
+    return response.json()
+  }
+
+  async getCorridasEscuderiasReport(): Promise<DadosListagemCorridasEscuderias[]> {
+    const response = await this.fetchWithAuth(`${this.baseUrl}/admin/relatorio/escuderias/corridas`)
+    if (!response.ok) {
+      return this.handleResponseError(response, "Erro ao gerar relatório")
+    }
+    return response.json()
+  }
+
+  async getCircuitosEscuderiaReport(nomeEscuderia: string): Promise<DadosListagemCircuitosEscuderia[]> {
+    const response = await this.fetchWithAuth(
+      `${this.baseUrl}/admin/relatorio/escuderias/${encodeURIComponent(nomeEscuderia)}/circuitos`,
+    )
+    if (!response.ok) {
+      return this.handleResponseError(response, "Erro ao gerar relatório")
+    }
+    return response.json()
+  }
+
+  async getCorridasEscuderiaReport(nomeEscuderia: string): Promise<DadosListagemCorridasEscuderia[]> {
+    const response = await this.fetchWithAuth(
+      `${this.baseUrl}/admin/relatorio/escuderias/${encodeURIComponent(nomeEscuderia)}/corridas`,
     )
     if (!response.ok) {
       return this.handleResponseError(response, "Erro ao gerar relatório")

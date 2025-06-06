@@ -1,8 +1,11 @@
 package com.f1.api.dto.piloto;
 
-import com.f1.api.domain.piloto.Piloto;
-
-import java.time.LocalDate;
-
+/**
+ * Representa os dados básicos de nome de um piloto.
+ *
+ * @param nome      Primeiro nome do piloto.
+ * @param sobrenome Sobrenome do piloto.
+ */
 public record DadosNomePiloto(String nome,
-                              String sobrenome) {}
+                              String sobrenome) {
+}

@@ -58,7 +58,7 @@ export function LoginForm() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-red-50 to-red-100 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-gray-700 flex items-center justify-center p-4">
       <Card className="w-full max-w-md">
         <CardHeader className="text-center">
           <div className="flex justify-center mb-4">
@@ -111,10 +111,10 @@ export function LoginForm() {
                 • <strong>Admin:</strong> admin / admin
               </li>
               <li>
-                • <strong>Escuderia:</strong> [nome]c / [nome]
+                • <strong>Escuderia:</strong> [nome]_c / [nome]
               </li>
               <li>
-                • <strong>Piloto:</strong> [nome]d / [nome]
+                • <strong>Piloto:</strong> [nome]_d / [nome]
               </li>
             </ul>
           </div>
